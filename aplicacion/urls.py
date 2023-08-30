@@ -10,6 +10,9 @@ urlpatterns = [
 
     #Bolsos
     path('bolsos/', bolso, name="bolso"),
+    path('updateBolso/<id_bolso>/', updateBolso, name="updateBolso"),
+    path('deleteBolso/<id_bolso>/', deleteBolso, name="deleteBolso"),
+    path('createBolso/', createBolso, name="createBolso"),
 
     #Riñoneras
     path('riñoneras/', rinionera, name="rinionera"),
