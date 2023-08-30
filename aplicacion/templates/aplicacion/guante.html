@@ -12,7 +12,7 @@
     <tr>
         <td width="120"><h2>Agregar Guantes</h2></td>
         <td>
-            <a href="#!" class="btn btn-primary btn-sm">
+            <a href="{% url 'createGuante' %}" class="btn btn-primary btn-sm">
                 <i class="bi bi-plus-lg" title="New Record"></i>
             </a>
             
@@ -35,10 +35,10 @@
             <td>{{ g.codigo }}</td>
             <td>{{ g.precio }}</td>
             <td>
-                <a href="#!" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+                <a href="{% url 'updateGuante' g.id %}" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
                     <i class="fas fa-edit fa-sm" title="Edit Record"></i>
                 </a>
-                <a href="#!" class="btn btn-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+                <a href="{% url 'deleteGuante' g.id %}" class="btn btn-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
                     <i class="fas fa-trash fa-sm" title="Delete Record"></i>
                 </a>
             </td>
