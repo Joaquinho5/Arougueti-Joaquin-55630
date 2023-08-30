@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Planeta</title>
+        <title>Marroquinería</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Bootstrap Icons-->
@@ -23,15 +23,15 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="#page-top">Planeta</a>
+                <a class="navbar-brand" href="#page-top">Marroquinería</a>
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Explorar</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Perfil</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Mis publicaciones</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Crear Nueva Publicación</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'base' %}">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'bolso' %}">Bolsos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'gorro' %}">Gorros</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'rinionera' %}">Riñoneras</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'guante' %}">Guantes</a></li>
                     </ul>
                 </div>
             </div>
@@ -41,16 +41,26 @@
             <div class="container px-4 px-lg-5 h-100">
                 <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
                     <div class="col-lg-8 align-self-end">
-                        <h1 class="text-white font-weight-bold">Tu lugar donde compartir y transmitir experiencias</h1>
+                        <h1 class="text-white font-weight-bold">Tu lugar donde comprar Marroquinería</h1>
+                        <h2>
+                            
+                            {% block titulo %}
+                                
+                            {% endblock titulo %}
+                                
+                        </h2>
                         <hr class="divider" />
                     </div>
                     <div class="col-lg-8 align-self-baseline">
-                        <p class="text-white-75 mb-5">Compartir es muy facil haciendo click en el botón de acá abajo</p>
-                        <a class="btn btn-primary btn-xl" href="#">Publicá</a>
                     </div>
                 </div>
             </div>
         </header>
+        
+        {% block contenido %}
+            
+        {% endblock contenido %}
+            
         <!-- Footer-->
         <footer class="bg-light py-5">
             <div class="container px-4 px-lg-5"><div class="small text-center text-muted">Copyright &copy; 2023 - Joaquinho5</div></div>

@@ -1,0 +1,28 @@
+{% extends 'aplicacion/base.html' %}
+{% load static %}
+
+{% block titulo %}
+    Guantes
+{% endblock titulo %}
+
+{% block contenido %}
+<h4>Cantidad de Gorros en la tabla {{ Guantes|length }}</h4>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre de Guantes</th>
+            <th>codigo</th>
+            <th>Precio</th>
+        </tr>
+    </thead>
+    <tbody>
+{% for g in Guantes %}
+        <tr>
+            <td>{{ g.nombre }}</td>
+            <td>{{ g.codigo }}</td>
+            <td>{{ g.precio }}</td>
+        </tr>
+{% endfor %}
+    </tbody>
+</table>
+{% endblock contenido %}

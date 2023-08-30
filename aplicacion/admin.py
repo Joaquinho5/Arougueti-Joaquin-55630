@@ -1,6 +1,11 @@
 from django.contrib import admin
 from .models import *
-admin.site.register(Publicacion)
-admin.site.register(Comentario)
-admin.site.register(Etiqueta)
-admin.site.register(PerfilUsuario)
+from django.db import models
+
+admin.site.register(Gorro)
+admin.site.register(Guante)
+admin.site.register(Bolso)
+admin.site.register(Rinionera)
+
+
+    

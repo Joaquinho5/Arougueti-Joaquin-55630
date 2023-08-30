@@ -1,0 +1,28 @@
+{% extends 'aplicacion/base.html' %}
+{% load static %}
+
+{% block titulo %}
+    Riñoneras
+{% endblock titulo %}
+
+{% block contenido %}
+<h4>Cantidad de Gorros en la tabla {{ Rinioneras|length }}</h4>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre de Rinionera</th>
+            <th>codigo</th>
+            <th>Precio</th>
+        </tr>
+    </thead>
+    <tbody>
+{% for g in Rinioneras %}
+        <tr>
+            <td>{{ g.nombre }}</td>
+            <td>{{ g.codigo }}</td>
+            <td>{{ g.precio }}</td>
+        </tr>
+{% endfor %}
+    </tbody>
+</table>
+{% endblock contenido %}
