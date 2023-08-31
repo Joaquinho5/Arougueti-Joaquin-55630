@@ -35,10 +35,10 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'rinionera' %}">Riñoneras</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'guante' %}">Guantes</a></li>
                         <p style="color:white">Hola guapetón llamado {{user.username}}!</p>
-                        <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a>
                         {% else %}
-                        <a class="btn btn-success" href="{% url 'registro' %}">Registro</a>
-                        <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'registro' %}">Registro</a>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a>
 
                         {% endif %}
                     </ul>
