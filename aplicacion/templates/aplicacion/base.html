@@ -28,10 +28,19 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
                         <li class="nav-item"><a class="nav-link" href="{% url 'base' %}">Inicio</a></li>
+
+                        {% if user.is_authenticated %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'bolso' %}">Bolsos</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'gorro' %}">Gorros</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'rinionera' %}">Riñoneras</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'guante' %}">Guantes</a></li>
+                        <p style="color:white">Hola guapetón llamado {{user.username}}!</p>
+                        <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+                        {% else %}
+                        <a class="btn btn-success" href="{% url 'registro' %}">Registro</a>
+                        <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+
+                        {% endif %}
                     </ul>
                 </div>
             </div>

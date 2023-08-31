@@ -1,11 +1,49 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.http import HttpResponse
+
 from .models import *
 from .forms import *
 
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+
 def base(request):
     return render(request, "aplicacion/base.html")
+
+# Login / log out / registro
+
+def login_request(request):
+    if request.method == "POST":
+        miForm = AuthenticationForm(request, data=request.POST)
+        if miForm.is_valid():
+            usuario = miForm.cleaned_data.get('username')
+            password = miForm.cleaned_data.get('password')
+            user = authenticate(username=usuario, password=password)
+            if user is not None:
+                login(request, user)
+                return render(request, "aplicacion/base.html", {'mensaje': f'Bienvenido a este bello sitio {usuario}'})
+            else:
+                return render(request, "aplicacion/login.html", {'form': miForm, 'mensaje': f'Los datos no válidos querido'})
+        else:
+            return render(request, "aplicacion/login.html", {'form': miForm, 'mensaje': f'Los datos no válidos querido'})
+
+    miForm =   AuthenticationForm()      
+
+    return render(request, "aplicacion/login.html", {"form":miForm}) 
+
+def register(request):
+    if request.method == "POST":
+        miForm = RegistroUsuariosForm(request.POST)
+        if miForm.is_valid():
+            usuario = miForm.cleaned_data.get('username')
+            miForm.save()
+            return render(request, "aplicacion/base.html")
+    else:
+        miForm =   RegistroUsuariosForm()      
+    return render(request, "aplicacion/registro.html", {"form":miForm}) 
 
 # Gorros
 def gorro(request):
@@ -196,3 +234,5 @@ def createGuante(request):
         miForm = RinioneraForm()
 
     return render(request, "aplicacion/guanteForm.html", {"form":miForm})
+
+
