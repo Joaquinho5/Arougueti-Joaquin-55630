@@ -10,10 +10,16 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 
+from django.db.models import Q
+
+
 def base(request):
     return render(request, "aplicacion/base.html")
 
-# Login / log out / registro
+def about(request):
+    return render(request, 'aplicacion/aboutme.html')
+
+## Login / log out / registro
 
 def login_request(request):
     if request.method == "POST":
@@ -24,6 +30,13 @@ def login_request(request):
             user = authenticate(username=usuario, password=password)
             if user is not None:
                 login(request, user)
+                try:
+                    avatar = Avatar.objects.get(user=request.user.id).imagen.url
+                except:
+                    avatar = "/media/avatares/default.png"
+                finally:
+                    request.session["avatar"] = avatar
+                    
                 return render(request, "aplicacion/base.html", {'mensaje': f'Bienvenido a este bello sitio {usuario}'})
             else:
                 return render(request, "aplicacion/login.html", {'form': miForm, 'mensaje': f'Los datos no válidos querido'})
@@ -45,7 +58,49 @@ def register(request):
         miForm =   RegistroUsuariosForm()      
     return render(request, "aplicacion/registro.html", {"form":miForm}) 
 
-# Gorros
+@login_required
+def editarPerfil(request):
+    usuario = request.user
+    if request.method == "POST":
+        form = UserEditForm(request.POST)
+        if form.is_valid():
+            usuario.email = form.cleaned_data.get('email')
+            usuario.password1 = form.cleaned_data.get('password1')
+            usuario.password2 = form.cleaned_data.get('password2')
+            usuario.first_name = form.cleaned_data.get('first_name')
+            usuario.last_name = form.cleaned_data.get('last_name')
+            usuario.save()
+            return render(request,"aplicacion/base.html")
+        else:
+            return render(request,"aplicacion/editarPerfil.html", {'form': form, 'usuario': usuario.username})
+    else:
+        form = UserEditForm(instance=usuario)
+    return render(request, "aplicacion/editarPerfil.html", {'form': form, 'usuario': usuario.username})
+
+@login_required
+def agregarAvatar(request):
+    if request.method == "POST":
+        form = AvatarFormulario(request.POST, request.FILES) 
+        if form.is_valid():
+            u = User.objects.get(username=request.user)
+
+            avatarViejo = Avatar.objects.filter(user=u)
+            if len(avatarViejo) > 0:
+                for i in range(len(avatarViejo)):
+                    avatarViejo[i].delete()
+  
+            avatar = Avatar(user=u, imagen=form.cleaned_data['imagen'])
+            avatar.save()
+
+            imagen = Avatar.objects.get(user=request.user.id).imagen.url
+            request.session["avatar"] = imagen
+            return render(request,"aplicacion/base.html")
+    else:
+        form = AvatarFormulario()
+    return render(request, "aplicacion/agregarAvatar.html", {'form': form })
+
+## Gorros
+
 @login_required
 def gorro(request):
     contexto = {'Gorros': Gorro.objects.all()}
@@ -95,8 +150,21 @@ def createGorro(request):
 
     return render(request, "aplicacion/gorroForm.html", {"form":miForm})
 
+@login_required
+def buscarGorro(request):
+    return render(request, "aplicacion/buscarGorro.html")
 
-#Bolsos
+@login_required
+def buscar(request):
+    if request.GET['buscar']:
+        patron = request.GET['buscar']
+        Gorros = Gorro.objects.filter(Q(nombre__icontains=patron) | Q(codigo__icontains=patron))
+        contexto = {"Gorros": Gorros, 'titulo': f'Cursos que tiene como patron "{patron}"'}
+        return render(request, "aplicacion/gorro.html", contexto)
+    return HttpResponse("No se ingreso nada a buscar")
+
+
+## Bolsos
 
 @login_required
 def bolso(request):
@@ -147,9 +215,22 @@ def createBolso(request):
 
     return render(request, "aplicacion/bolsoForm.html", {"form":miForm})
 
+@login_required
+def buscarBolso(request):
+    return render(request, "aplicacion/buscarBolso.html")
+    
+@login_required
+def buscar2(request):
+    if request.GET['buscar']:
+        patron = request.GET['buscar']
+        Bolsos = Bolso.objects.filter(Q(nombre__icontains=patron) | Q(codigo__icontains=patron))
+        contexto = {"Bolsos": Bolsos, 'titulo': f'Bolsos que tiene como patron "{patron}"'}
+        return render(request, "aplicacion/bolso.html", contexto)
+    return HttpResponse("No se ingreso nada a buscar")
 
 
-#Riñoneras
+
+## Riñoneras
 
 @login_required
 def rinionera(request):
@@ -200,7 +281,20 @@ def createRinionera(request):
 
     return render(request, "aplicacion/rinioneraForm.html", {"form":miForm})
 
-#Guantes
+@login_required
+def buscarRinionera(request):
+    return render(request, "aplicacion/buscarRinionera.html")
+    
+@login_required
+def buscar3(request):
+    if request.GET['buscar']:
+        patron = request.GET['buscar']
+        Rinioneras = Rinionera.objects.filter(Q(nombre__icontains=patron) | Q(codigo__icontains=patron))
+        contexto = {"Rinioneras": Rinioneras, 'titulo': f'Rinioneras que tiene como patron "{patron}"'}
+        return render(request, "aplicacion/rinionera.html", contexto)
+    return HttpResponse("No se ingreso nada a buscar")
+
+## Guantes
 
 @login_required
 def guante(request):
@@ -250,5 +344,18 @@ def createGuante(request):
         miForm = RinioneraForm()
 
     return render(request, "aplicacion/guanteForm.html", {"form":miForm})
+
+@login_required
+def buscarGuante(request):
+    return render(request, "aplicacion/buscarGuante.html")
+    
+@login_required
+def buscar4(request):
+    if request.GET['buscar']:
+        patron = request.GET['buscar']
+        Guantes = Guante.objects.filter(Q(nombre__icontains=patron) | Q(codigo__icontains=patron))
+        contexto = {"Guantes": Guantes, 'titulo': f'Guantes que tiene como patron "{patron}"'}
+        return render(request, "aplicacion/guante.html", contexto)
+    return HttpResponse("No se ingreso nada a buscar")
 
 

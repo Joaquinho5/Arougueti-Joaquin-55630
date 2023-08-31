@@ -14,6 +14,7 @@
         <!-- Google fonts-->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <!-- SimpleLightbox plugin CSS-->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
@@ -35,10 +36,15 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'rinionera' %}">Riñoneras</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'guante' %}">Guantes</a></li>
                         <p style="color:white">Hola guapetón llamado {{user.username}}!</p>
+                        <div class="text-center">
+                            <img src="{{ request.session.avatar }}" height="40px" weight="40px"/>
+                        </div>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'editar_perfil' %}">Perfil</a>
                         <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a>
                         {% else %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'registro' %}">Registro</a>
                         <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">Acerca de mi</a>
 
                         {% endif %}
                     </ul>
