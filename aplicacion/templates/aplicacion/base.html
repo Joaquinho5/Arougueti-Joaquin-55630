@@ -40,6 +40,7 @@
                             <img src="{{ request.session.avatar }}" height="40px" weight="40px"/>
                         </div>
                         <li class="nav-item"><a class="nav-link" href="{% url 'editar_perfil' %}">Perfil</a>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'agregar_avatar' %}">Avatar</a>
                         <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a>
                         {% else %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'registro' %}">Registro</a>
